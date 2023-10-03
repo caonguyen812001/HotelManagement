@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +14,12 @@ namespace HotelManagement.Data
         {
         }
 
-        public DbSet<HotelManagement.Models.HotelManagement.Hotel> Hotels { get; set; } = default!;
-        public DbSet<HotelManagement.Models.HotelManagement.RoomType> RoomTypes { get; set; }
+        public DbSet<HotelManagement.Models.HotelManagement.Hotel> Hotels { get; set; }
+
+        public DbSet<HotelManagement.Models.HotelManagement.RoomType>? RoomType { get; set; }
+
+        public DbSet<HotelManagement.Models.HotelManagement.Booking>? Booking { get; set; }
+
+        public DbSet<HotelManagement.Models.HotelManagement.AmenityMapping>? AmenityMapping { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using HotelManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelManagement.Migrations
 {
     [DbContext(typeof(HotelManagementContext))]
-    partial class HotelManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20231004145502_FullDb")]
+    partial class FullDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,6 +171,9 @@ namespace HotelManagement.Migrations
                     b.Property<int>("NumberOfBed")
                         .HasColumnType("int");
 
+                    b.Property<int>("NumberOfRoom")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("PricePerNight")
                         .HasColumnType("decimal(18,2)");
 
@@ -179,28 +184,19 @@ namespace HotelManagement.Migrations
                     b.ToTable("RoomType");
                 });
 
-            modelBuilder.Entity("HotelManagement.Models.HotelManagement.RoomTypeMapping", b =>
+            modelBuilder.Entity("HotelRoomType", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("HotelId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("HotelId")
+                    b.Property<Guid>("RoomTypesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RoomTypeCount")
-                        .HasColumnType("int");
+                    b.HasKey("HotelId", "RoomTypesId");
 
-                    b.Property<Guid>("RoomTypeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasIndex("RoomTypesId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("HotelId");
-
-                    b.HasIndex("RoomTypeId");
-
-                    b.ToTable("RoomTypeMapping");
+                    b.ToTable("HotelRoomType");
                 });
 
             modelBuilder.Entity("BookingHotel", b =>
@@ -234,29 +230,24 @@ namespace HotelManagement.Migrations
                         .HasForeignKey("BookingId");
                 });
 
-            modelBuilder.Entity("HotelManagement.Models.HotelManagement.RoomTypeMapping", b =>
+            modelBuilder.Entity("HotelRoomType", b =>
                 {
                     b.HasOne("HotelManagement.Models.HotelManagement.Hotel", null)
-                        .WithMany("RoomTypeList")
-                        .HasForeignKey("HotelId");
-
-                    b.HasOne("HotelManagement.Models.HotelManagement.RoomType", "RoomType")
                         .WithMany()
-                        .HasForeignKey("RoomTypeId")
+                        .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("RoomType");
+                    b.HasOne("HotelManagement.Models.HotelManagement.RoomType", null)
+                        .WithMany()
+                        .HasForeignKey("RoomTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HotelManagement.Models.HotelManagement.Booking", b =>
                 {
                     b.Navigation("RomType");
-                });
-
-            modelBuilder.Entity("HotelManagement.Models.HotelManagement.Hotel", b =>
-                {
-                    b.Navigation("RoomTypeList");
                 });
 
             modelBuilder.Entity("HotelManagement.Models.HotelManagement.RoomType", b =>

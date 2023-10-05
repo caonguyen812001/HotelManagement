@@ -10,13 +10,10 @@
 
         public int NumberOfBed { get; set; }
 
-        public int NumberOfRoom { get; set; }
-
         public string ImageUrlsJsonString { get; set; }
 
         public decimal PricePerNight { get; set; }
 
-        public ICollection<AmenityMapping> Amenities { get; set; }
-
+        public ICollection<AmenityMapping>? Amenities { get; set; }
     }
 }

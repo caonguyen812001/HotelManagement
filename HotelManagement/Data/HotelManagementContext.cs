@@ -21,5 +21,7 @@ namespace HotelManagement.Data
         public DbSet<HotelManagement.Models.HotelManagement.Booking>? Booking { get; set; }
 
         public DbSet<HotelManagement.Models.HotelManagement.AmenityMapping>? AmenityMapping { get; set; }
+
+        public DbSet<HotelManagement.Models.HotelManagement.RoomTypeMapping>? RoomTypeMapping { get; set; }
     }
 }

@@ -12,7 +12,7 @@
 
         public string ImageUrl { get; set; }
 
-        public ICollection<RoomType> RoomTypes { get; set; }
+        public ICollection<RoomTypeMapping> RoomTypeList { get; set; }
 
         public ICollection<Booking> Bookings { get; set; }
 

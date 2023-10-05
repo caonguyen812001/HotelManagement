@@ -10,88 +10,88 @@ using HotelManagement.Models.HotelManagement;
 
 namespace HotelManagement.Controllers
 {
-    public class HotelController : Controller
+    public class RoomTypeMappingController : Controller
     {
         private readonly HotelManagementContext _context;
 
-        public HotelController(HotelManagementContext context)
+        public RoomTypeMappingController(HotelManagementContext context)
         {
             _context = context;
         }
 
-        // GET: Hotel
+        // GET: RoomTypeMapping
         public async Task<IActionResult> Index()
         {
-              return _context.Hotels != null ? 
-                          View(await _context.Hotels.ToListAsync()) :
-                          Problem("Entity set 'HotelManagementContext.Hotels'  is null.");
+              return _context.RoomTypeMapping != null ? 
+                          View(await _context.RoomTypeMapping.ToListAsync()) :
+                          Problem("Entity set 'HotelManagementContext.RoomTypeMapping'  is null.");
         }
 
-        // GET: Hotel/Details/5
+        // GET: RoomTypeMapping/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Hotels == null)
+            if (id == null || _context.RoomTypeMapping == null)
             {
                 return NotFound();
             }
 
-            var hotel = await _context.Hotels
+            var roomTypeMapping = await _context.RoomTypeMapping
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (hotel == null)
+            if (roomTypeMapping == null)
             {
                 return NotFound();
             }
 
-            return View(hotel);
+            return View(roomTypeMapping);
         }
 
-        // GET: Hotel/Create
+        // GET: RoomTypeMapping/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Hotel/Create
+        // POST: RoomTypeMapping/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,CityCode,ImageUrl,Stars")] Hotel hotel)
+        public async Task<IActionResult> Create([Bind("Id,RoomTypeCount")] RoomTypeMapping roomTypeMapping)
         {
             if (ModelState.IsValid)
             {
-                hotel.Id = Guid.NewGuid();
-                _context.Add(hotel);
+                roomTypeMapping.Id = Guid.NewGuid();
+                _context.Add(roomTypeMapping);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(hotel);
+            return View(roomTypeMapping);
         }
 
-        // GET: Hotel/Edit/5
+        // GET: RoomTypeMapping/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Hotels == null)
+            if (id == null || _context.RoomTypeMapping == null)
             {
                 return NotFound();
             }
 
-            var hotel = await _context.Hotels.FindAsync(id);
-            if (hotel == null)
+            var roomTypeMapping = await _context.RoomTypeMapping.FindAsync(id);
+            if (roomTypeMapping == null)
             {
                 return NotFound();
             }
-            return View(hotel);
+            return View(roomTypeMapping);
         }
 
-        // POST: Hotel/Edit/5
+        // POST: RoomTypeMapping/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Address,CityCode,ImageUrl,Stars")] Hotel hotel)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RoomTypeCount")] RoomTypeMapping roomTypeMapping)
         {
-            if (id != hotel.Id)
+            if (id != roomTypeMapping.Id)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace HotelManagement.Controllers
             {
                 try
                 {
-                    _context.Update(hotel);
+                    _context.Update(roomTypeMapping);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HotelExists(hotel.Id))
+                    if (!RoomTypeMappingExists(roomTypeMapping.Id))
                     {
                         return NotFound();
                     }
@@ -116,49 +116,49 @@ namespace HotelManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(hotel);
+            return View(roomTypeMapping);
         }
 
-        // GET: Hotel/Delete/5
+        // GET: RoomTypeMapping/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Hotels == null)
+            if (id == null || _context.RoomTypeMapping == null)
             {
                 return NotFound();
             }
 
-            var hotel = await _context.Hotels
+            var roomTypeMapping = await _context.RoomTypeMapping
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (hotel == null)
+            if (roomTypeMapping == null)
             {
                 return NotFound();
             }
 
-            return View(hotel);
+            return View(roomTypeMapping);
         }
 
-        // POST: Hotel/Delete/5
+        // POST: RoomTypeMapping/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Hotels == null)
+            if (_context.RoomTypeMapping == null)
             {
-                return Problem("Entity set 'HotelManagementContext.Hotels'  is null.");
+                return Problem("Entity set 'HotelManagementContext.RoomTypeMapping'  is null.");
             }
-            var hotel = await _context.Hotels.FindAsync(id);
-            if (hotel != null)
+            var roomTypeMapping = await _context.RoomTypeMapping.FindAsync(id);
+            if (roomTypeMapping != null)
             {
-                _context.Hotels.Remove(hotel);
+                _context.RoomTypeMapping.Remove(roomTypeMapping);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HotelExists(Guid id)
+        private bool RoomTypeMappingExists(Guid id)
         {
-          return (_context.Hotels?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.RoomTypeMapping?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
